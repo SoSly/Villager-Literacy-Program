@@ -1,4 +1,4 @@
-package org.sosly.vlp.capability.entity;
+package org.sosly.vlp.capabilities.entities;
 
 import org.sosly.vlp.api.capability.IVillagerStatus;
 

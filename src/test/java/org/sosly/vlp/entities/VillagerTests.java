@@ -1,4 +1,4 @@
-package org.sosly.vlp.entity;
+package org.sosly.vlp.entities;
 
 import net.minecraft.core.BlockPos;
 import net.minecraft.gametest.framework.AfterBatch;
@@ -42,8 +42,8 @@ public class VillagerTests {
             test.fail("Failed to create villager");
             return;
         }
-        BlockPos fletchingPos = test.absolutePos(new BlockPos(1, 2, 1));
-        BlockPos villagerPos = test.absolutePos(new BlockPos(2, 2, 2));
+        BlockPos fletchingPos = test.absolutePos(new BlockPos(2, 2, 2));
+        BlockPos villagerPos = test.absolutePos(new BlockPos(2, 3, 2));
         level.setBlock(fletchingPos, ForgeRegistries.BLOCKS.getValue(new ResourceLocation("minecraft:fletching_table")).defaultBlockState(), 3);
         level.addFreshEntity(villager);
         villager.setPos(villagerPos.getCenter());

@@ -1,4 +1,4 @@
-package org.sosly.vlp.mixin;
+package org.sosly.vlp.mixins;
 
 import org.objectweb.asm.tree.ClassNode;
 import org.spongepowered.asm.mixin.extensibility.IMixinConfigPlugin;

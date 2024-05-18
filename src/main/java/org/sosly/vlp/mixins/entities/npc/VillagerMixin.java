@@ -1,4 +1,4 @@
-package org.sosly.vlp.mixin.entity.npc;
+package org.sosly.vlp.mixins.entities.npc;
 
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.npc.AbstractVillager;

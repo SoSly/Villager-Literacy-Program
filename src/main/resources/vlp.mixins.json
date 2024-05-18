@@ -2,11 +2,11 @@
   "required": true,
   "minVersion": "0.8",
   "compatibilityLevel": "JAVA_17",
-  "package": "org.sosly.vlp.mixin",
+  "package": "org.sosly.vlp.mixins",
   "refmap": "vlp.refmap.json",
-  "plugin": "org.sosly.vlp.mixin.MixinConfigPlugin",
+  "plugin": "org.sosly.vlp.mixins.MixinConfigPlugin",
   "mixins": [
-    "entity.npc.VillagerMixin"
+    "entities.npc.VillagerMixin"
   ],
   "injectors": {
     "defaultRequire": 1
