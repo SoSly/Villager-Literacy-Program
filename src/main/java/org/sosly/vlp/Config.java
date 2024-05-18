@@ -10,10 +10,17 @@ import net.minecraftforge.fml.event.config.ModConfigEvent;
 @Mod.EventBusSubscriber(modid = VillagerLiteracyProgram.MOD_ID, bus = Mod.EventBusSubscriber.Bus.MOD)
 public class Config {
     private static final ForgeConfigSpec.Builder BUILDER = new ForgeConfigSpec.Builder();
+
+    private static final ForgeConfigSpec.IntValue LEVEL_UP_TIME = BUILDER
+            .comment("The number of ticks between each level up for villagers")
+            .defineInRange("level_up_time", 24000, 20, Integer.MAX_VALUE);
+
     static final ForgeConfigSpec SPEC = BUILDER.build();
+
+    public static int levelUpTime;
 
     @SubscribeEvent
     static void onLoad(final ModConfigEvent event) {
-
+        levelUpTime = LEVEL_UP_TIME.get();
     }
 }
