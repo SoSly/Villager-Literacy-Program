@@ -1,37 +1,26 @@
-package org.sosly.vlp.capability.entity;
+package org.sosly.vlp.event.capability;
 
 import net.minecraft.world.entity.npc.Villager;
 import net.minecraft.world.entity.npc.VillagerData;
 import net.minecraft.world.entity.npc.VillagerProfession;
 import net.minecraft.world.level.Level;
 import net.minecraftforge.event.AttachCapabilitiesEvent;
-import net.minecraftforge.event.entity.EntityJoinLevelEvent;
 import net.minecraftforge.event.entity.living.LivingEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
 import org.sosly.vlp.Config;
 import org.sosly.vlp.VillagerLiteracyProgram;
-import org.sosly.vlp.api.capability.IVillagerLiteracyCapability;
+import org.sosly.vlp.api.capability.IVillagerStatus;
 import org.sosly.vlp.api.entity.IVillager;
+import org.sosly.vlp.capability.entity.VillagerStatus;
+import org.sosly.vlp.capability.entity.VillagerStatusProvider;
 
 @Mod.EventBusSubscriber(modid = VillagerLiteracyProgram.MOD_ID, bus = Mod.EventBusSubscriber.Bus.FORGE)
-public class VillagerLiteracyCapability implements IVillagerLiteracyCapability {
-    private long lastLevelUpTick = 0;
-
-    @Override
-    public long getLastLevelUpTick() {
-        return lastLevelUpTick;
-    }
-
-    @Override
-    public void setLastLevelUpTick(long time) {
-        lastLevelUpTick = time;
-    }
-
+public class VillagerStatusHandler {
     @SubscribeEvent
     public static void onAttachCapabilities(AttachCapabilitiesEvent<?> event) {
         if (event.getObject() instanceof Villager) {
-            event.addCapability(IVillagerLiteracyCapability.KEY, new VillagerLiteracyProvider());
+            event.addCapability(IVillagerStatus.CAPABILITY, new VillagerStatusProvider());
         }
     }
 
@@ -46,11 +35,8 @@ public class VillagerLiteracyCapability implements IVillagerLiteracyCapability {
             return;
         }
 
-        IVillagerLiteracyCapability capability = villager.getCapability(VillagerLiteracyProvider.VILLAGER_LITERACY)
-                .orElse(null);
-        if (capability == null) {
-            return;
-        }
+        IVillagerStatus capability = villager.getCapability(VillagerStatusProvider.STATUS)
+                .orElse(new VillagerStatus());
 
         long lastLevelUpTick = capability.getLastLevelUpTick();
         long currentTick = level.getGameTime();
@@ -76,18 +62,5 @@ public class VillagerLiteracyCapability implements IVillagerLiteracyCapability {
         villager.setVillagerData(data.setLevel(data.getLevel() + 1));
         ((IVillager)villager).vlp$UpdateTrades();
         capability.setLastLevelUpTick(currentTick);
-    }
-
-    @SubscribeEvent
-    public static void onVillagerJoinLevel(EntityJoinLevelEvent event) {
-        if (!(event.getEntity() instanceof Villager villager)) {
-            return;
-        }
-
-        IVillagerLiteracyCapability capability = villager.getCapability(VillagerLiteracyProvider.VILLAGER_LITERACY)
-                .orElse(null);
-        if (capability == null) {
-            return;
-        }
     }
 }

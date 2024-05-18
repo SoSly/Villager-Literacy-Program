@@ -6,8 +6,8 @@ import org.sosly.vlp.VillagerLiteracyProgram;
 /**
  * Capability for tracking extended villager data.
  */
-public interface IVillagerLiteracyCapability {
-    ResourceLocation KEY = new ResourceLocation(VillagerLiteracyProgram.MOD_ID, "villager-literacy");
+public interface IVillagerStatus {
+    ResourceLocation CAPABILITY = new ResourceLocation(VillagerLiteracyProgram.MOD_ID, "status");
 
     /**
      * Get the last tick that the villager leveled up.
