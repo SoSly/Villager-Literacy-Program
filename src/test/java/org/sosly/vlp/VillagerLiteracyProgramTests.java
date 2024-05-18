@@ -11,7 +11,7 @@ import net.minecraftforge.gametest.PrefixGameTestTemplate;
 @PrefixGameTestTemplate(false)
 @GameTestHolder(VillagerLiteracyProgram.MOD_ID)
 public class VillagerLiteracyProgramTests {
-    @GameTest(template = "test_5x5", batch = "mod_load")
+    @GameTest(template = "test_3x3")
     public static void modLoadTest(final GameTestHelper test) {
         Level level = test.getLevel();
         MinecraftServer server = level.getServer();
