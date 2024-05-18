@@ -10,12 +10,8 @@ import org.spongepowered.asm.mixin.Shadow;
 import org.spongepowered.asm.mixin.Unique;
 
 @Mixin(Villager.class)
-public abstract class VillagerMixin extends AbstractVillager implements IVillager {
+public abstract class VillagerMixin implements IVillager {
     @Shadow protected abstract void updateTrades();
-
-    public VillagerMixin(EntityType<? extends AbstractVillager> type, Level level) {
-        super(type, level);
-    }
 
     @Unique
     public void vlp$UpdateTrades() {

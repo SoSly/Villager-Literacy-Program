@@ -4,21 +4,21 @@ import net.minecraft.core.BlockPos;
 import net.minecraft.gametest.framework.AfterBatch;
 import net.minecraft.gametest.framework.BeforeBatch;
 import net.minecraft.gametest.framework.GameTestHelper;
-import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.npc.Villager;
 import net.minecraft.world.entity.npc.VillagerProfession;
 import net.minecraft.world.item.trading.MerchantOffers;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.Block;
-import net.minecraftforge.registries.ForgeRegistries;
+import net.minecraftforge.gametest.GameTestHolder;
 import org.jetbrains.annotations.NotNull;
 import org.sosly.vlp.Config;
+import org.sosly.vlp.VillagerLiteracyProgram;
 
 import java.util.concurrent.atomic.AtomicBoolean;
 import java.util.concurrent.atomic.AtomicReference;
 
-
+@GameTestHolder(VillagerLiteracyProgram.MOD_ID)
 abstract public class AbstractVillagerProfessionTests {
     protected static final String BATCH = "villager_profession_tests";
 
@@ -53,6 +53,7 @@ abstract public class AbstractVillagerProfessionTests {
         test.onEachTick(() -> {
             if (!ready.get() && villager.getVillagerData().getProfession() == profession) {
                 test.assertTrue(villager.getVillagerData().getLevel() == 1, "Villager leveled before initialization");
+                test.assertFalse(villager.getOffers().isEmpty(), "Villager has no offers before initialization");
                 test.assertTrue(villager.getOffers().size() == 2, "Villager has too many offers before initialization");
                 MerchantOffers offers = villager.getOffers();
                 offers.forEach(initialOffers.get()::add);
@@ -63,7 +64,7 @@ abstract public class AbstractVillagerProfessionTests {
         test.succeedWhen(() -> {
             test.assertTrue(ready.get(), "Villager did not initialize");
             test.assertTrue(villager.getVillagerData().getLevel() > 1, "Villager did not level up");
-            test.assertTrue(villager.getOffers() != initialOffers.get(), "Villager did not refresh offers");
+            test.assertTrue(villager.getOffers().size() > initialOffers.get().size(), "Villager did not refresh offers");
         });
     }
 }

@@ -38,7 +38,7 @@ public class VillagerEventHandler {
         }
 
         // since we have a villager, let's stop the usual interact from happening
-        event.setCanceled(true);
+//        event.setCanceled(true);
         // todo: open villager inventory gui
     }
 
