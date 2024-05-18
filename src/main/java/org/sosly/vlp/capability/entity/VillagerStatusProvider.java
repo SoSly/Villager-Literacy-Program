@@ -10,20 +10,20 @@ import net.minecraftforge.common.capabilities.ICapabilitySerializable;
 import net.minecraftforge.common.util.LazyOptional;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
-import org.sosly.vlp.api.capability.IVillagerLiteracyCapability;
+import org.sosly.vlp.api.capability.IVillagerStatus;
 
-public class VillagerLiteracyProvider implements ICapabilitySerializable<Tag> {
-    public static final Capability<IVillagerLiteracyCapability> VILLAGER_LITERACY = CapabilityManager.get(new CapabilityToken<>() {});
-    private final LazyOptional<IVillagerLiteracyCapability> holder = LazyOptional.of(VillagerLiteracyCapability::new);
+public class VillagerStatusProvider implements ICapabilitySerializable<Tag> {
+    public static final Capability<IVillagerStatus> STATUS = CapabilityManager.get(new CapabilityToken<>() {});
+    private final LazyOptional<IVillagerStatus> holder = LazyOptional.of(VillagerStatus::new);
 
     @Override
     public <T> @NotNull LazyOptional<T> getCapability(@NotNull Capability<T> capability, @Nullable Direction side) {
-        return VILLAGER_LITERACY.orEmpty(capability, holder);
+        return STATUS.orEmpty(capability, holder);
     }
 
     @Override
     public Tag serializeNBT() {
-        IVillagerLiteracyCapability instance = holder.orElse(new VillagerLiteracyCapability());
+        IVillagerStatus instance = holder.orElse(new VillagerStatus());
         CompoundTag tag = new CompoundTag();
         tag.putLong("lastLevelUpTick", instance.getLastLevelUpTick());
         return tag;
@@ -32,7 +32,7 @@ public class VillagerLiteracyProvider implements ICapabilitySerializable<Tag> {
     @Override
     public void deserializeNBT(Tag nbt) {
         if (nbt instanceof CompoundTag tag) {
-            IVillagerLiteracyCapability instance = holder.orElse(new VillagerLiteracyCapability());
+            IVillagerStatus instance = holder.orElse(new VillagerStatus());
             instance.setLastLevelUpTick(tag.getLong("lastLevelUpTick"));
         }
     }
