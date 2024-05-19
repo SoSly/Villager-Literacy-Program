@@ -1,27 +1,45 @@
-package org.sosly.vlp.event.capability;
+package org.sosly.vlp.events.entities;
 
 import net.minecraft.world.entity.npc.Villager;
 import net.minecraft.world.entity.npc.VillagerData;
 import net.minecraft.world.entity.npc.VillagerProfession;
+import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.level.Level;
 import net.minecraftforge.event.AttachCapabilitiesEvent;
 import net.minecraftforge.event.entity.living.LivingEvent;
+import net.minecraftforge.event.entity.player.PlayerInteractEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
 import org.sosly.vlp.Config;
 import org.sosly.vlp.VillagerLiteracyProgram;
 import org.sosly.vlp.api.capability.IVillagerStatus;
 import org.sosly.vlp.api.entity.IVillager;
-import org.sosly.vlp.capability.entity.VillagerStatus;
-import org.sosly.vlp.capability.entity.VillagerStatusProvider;
+import org.sosly.vlp.capabilities.entities.VillagerStatus;
+import org.sosly.vlp.capabilities.entities.VillagerStatusProvider;
 
 @Mod.EventBusSubscriber(modid = VillagerLiteracyProgram.MOD_ID, bus = Mod.EventBusSubscriber.Bus.FORGE)
-public class VillagerStatusHandler {
+public class VillagerEventHandler {
     @SubscribeEvent
     public static void onAttachCapabilities(AttachCapabilitiesEvent<?> event) {
         if (event.getObject() instanceof Villager) {
             event.addCapability(IVillagerStatus.CAPABILITY, new VillagerStatusProvider());
         }
+    }
+
+    @SubscribeEvent
+    public static void onPlayerInteract(PlayerInteractEvent.EntityInteract event) {
+        Player player = event.getEntity();
+        if (player == null) {
+            return;
+        }
+
+        if (!(event.getTarget() instanceof Villager villager)) {
+            return;
+        }
+
+        // since we have a villager, let's stop the usual interact from happening
+//        event.setCanceled(true);
+        // todo: open villager inventory gui
     }
 
     @SubscribeEvent

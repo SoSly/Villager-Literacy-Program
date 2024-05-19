@@ -1,4 +1,4 @@
-package org.sosly.vlp.capability.entity;
+package org.sosly.vlp.capabilities.entities;
 
 import net.minecraft.core.Direction;
 import net.minecraft.nbt.CompoundTag;
